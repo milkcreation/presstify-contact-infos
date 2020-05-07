@@ -8,7 +8,7 @@ use tiFy\Contracts\Support\ParamsBag;
 interface ContactInfos
 {
     /**
-     * Récupération de l'instance de l'extension gestion des inforamtions de contact.
+     * Récupération de l'instance de l'extension gestion des informations de contact.
      *
      * @return static|null
      */

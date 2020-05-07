@@ -9,10 +9,37 @@ use tiFy\Plugins\ContactInfos\{
 };
 use tiFy\Support\{ParamsBag, Proxy\Metabox};
 
+/**
+ * @desc Extension PresstiFy de gestion d'informations de contact.
+ * @author Jordy Manner <jordy@milkcreation.fr>
+ * @package tiFy\Plugins\ContactInfos
+ * @version 2.0.0
+ *
+ * USAGE :
+ * Activation
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Dans config/app.php
+ * >> ajouter ContactInfosServiceProvider à la liste des fournisseurs de services.
+ * <?php
+ *
+ * return [
+ *      ...
+ *      'providers' => [
+ *          ...
+ *          tiFy\Plugins\ContactInfos\ContactInfosServiceProvider::class
+ *          ...
+ *      ]
+ * ];
+ *
+ * Configuration
+ * ---------------------------------------------------------------------------------------------------------------------
+ * Dans le dossier de config, créer le fichier contact-infos.php
+ * @see /vendor/presstify-plugins/contact-infos/Resources/config/contact-infos.php
+ */
 class ContactInfos implements ContactInfosContract
 {
     /**
-     * Instance de l'extension de gestion des information de contact.
+     * Instance de l'extension de gestion des informations de contact.
      * @var ContactInfosContract|null
      */
     protected static $instance;
@@ -45,6 +72,8 @@ class ContactInfos implements ContactInfosContract
                 $this->setContainer($container);
             }
 
+            Metabox::registerDriver('contact-infos', (new ContactInfosMetabox())->setContactInfos($this));
+
             add_action('init', function () {
                 if ($config = config('contact-infos', true)) {
                     $defaults = [
@@ -68,7 +97,7 @@ class ContactInfos implements ContactInfosContract
                         $attrs['driver'] = 'contact-infos';
 
                         Metabox::add('ContactInfos', array_merge($attrs, [
-                            'driver' => (new ContactInfosMetabox())->setContactInfos($this)
+                            'driver' => 'contact-infos'
                         ]))->setScreen('tify_options@options')->setContext('tab');
                     }
                 }
