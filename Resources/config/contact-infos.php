@@ -2,5 +2,6 @@
 
 return [
     'fields' => [],
-    'admin'  => true,
+    'groups' => [],
+    'admin'  => false,
 ];
