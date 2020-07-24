@@ -101,6 +101,11 @@ class ContactInfosMetabox extends MetaboxDriver
                 'name'     => 'contact_postcode',
                 'title'    => __('Code postal', 'tify')
             ],
+            'country'     => [
+                'group'    => 'contact',
+                'name'     => 'contact_country',
+                'title'    => __('Pays', 'tify')
+            ],
             'phone'    => [
                 'group'    => 'contact',
                 'name'     => 'contact_phone',
