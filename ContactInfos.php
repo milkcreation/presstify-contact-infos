@@ -13,7 +13,7 @@ use tiFy\Support\{ParamsBag, Proxy\Metabox};
  * @desc Extension PresstiFy de gestion d'informations de contact.
  * @author Jordy Manner <jordy@milkcreation.fr>
  * @package tiFy\Plugins\ContactInfos
- * @version 2.0.0
+ * @version 2.0.1
  *
  * USAGE :
  * Activation
