@@ -13,8 +13,12 @@ if (!function_exists('contact_infos')) {
      */
     function contact_infos(?string $key = null, $default = null)
     {
-        $infos = ContactInfos::instance()->infos();
+        try {
+            $infos = ContactInfos::instance()->config('infos');
 
-        return is_null($key) ? $infos->all() : $infos->get($key, $default);
+            return is_null($key) ? $infos->all() : $infos->get($key, $default);
+        } catch(Exception $e) {
+            return $default;
+        }
     }
 }

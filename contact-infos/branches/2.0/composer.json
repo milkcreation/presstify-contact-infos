@@ -7,10 +7,10 @@
     "plugins",
     "wordpress",
     "contact",
-    "information"
+    "informations"
   ],
-  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/contact-infos",
-  "time": "2020-09-25",
+  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/contact-infos/",
+  "time": "2020-11-13",
   "license": "proprietary",
   "authors": [
     {
@@ -22,19 +22,27 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://composer.tigreblanc.fr/presstify"
+      "url": "https://composer.tigreblanc.fr/presstify/"
     }
   ],
   "require": {
     "composer/installers": "~1.0",
     "presstify/framework": ">=1.4"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
   "autoload": {
     "files": [
-      "helpers.php"
+      "src/helpers.php"
     ],
     "psr-4": {
-      "tiFy\\Plugins\\ContactInfos\\": ""
+      "tiFy\\Plugins\\ContactInfos\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "tiFy\\Plugins\\ContactInfos\\Test\\": "tests"
     }
   },
   "minimum-stability": "dev",
