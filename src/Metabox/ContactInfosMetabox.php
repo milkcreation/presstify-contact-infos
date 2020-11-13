@@ -73,8 +73,6 @@ class ContactInfosMetabox extends MetaboxDriver
     {
         parent::boot();
 
-        $this->set('viewer.directory', $this->contactInfos->resources('/views/admin/metabox/'));
-
         $fields = [
             'address1' => [
                 'group'    => 'contact',
@@ -258,6 +256,20 @@ class ContactInfosMetabox extends MetaboxDriver
         }
 
         return (new Collection($groups))->sortBy('position')->all();
+    }
+
+    /**
+     *
+     */
+    public function parse(): MetaboxDriverContract
+    {
+        parent::parse();
+
+        if (!$this->has('viewer.directory')) {
+            $this->set('viewer.directory', $this->contactInfos->resources('/views/admin/metabox/'));
+        }
+
+        return $this;
     }
 
     /**
