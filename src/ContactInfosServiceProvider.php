@@ -22,7 +22,7 @@ class ContactInfosServiceProvider extends ServiceProvider
     {
         if (($wp = $this->getContainer()->get('wp')) && $wp->is()) {
             add_action('after_setup_theme', function () {
-                $this->getContainer()->get('theme-suite')->boot();
+                $this->getContainer()->get('contact-infos')->boot();
             });
         }
     }
@@ -32,7 +32,7 @@ class ContactInfosServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share('theme-suite', function () {
+        $this->getContainer()->share('contact-infos', function () {
             $infos = get_option('contact_infos');
 
             return new ContactInfos(array_merge(config('contact-infos', []), compact('infos')), $this->getContainer());

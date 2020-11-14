@@ -14,9 +14,10 @@ if (!function_exists('contact_infos')) {
     function contact_infos(?string $key = null, $default = null)
     {
         try {
-            $infos = ContactInfos::instance()->config('infos');
+            $cinfos = ContactInfos::instance();
 
-            return is_null($key) ? $infos->all() : $infos->get($key, $default);
+            return is_null($key)
+                ? $cinfos->config()->get('infos', []) : $cinfos->config()->get("infos.{$key}", $default);
         } catch(Exception $e) {
             return $default;
         }
