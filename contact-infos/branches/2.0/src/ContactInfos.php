@@ -166,7 +166,7 @@ class ContactInfos implements ContactInfosContract
      */
     public function resolve(string $alias)
     {
-        return ($container = $this->getContainer()) ? $container->get("pwa.{$alias}") : null;
+        return ($container = $this->getContainer()) ? $container->get("contact-infos.{$alias}") : null;
     }
 
     /**
@@ -174,7 +174,7 @@ class ContactInfos implements ContactInfosContract
      */
     public function resolvable(string $alias): bool
     {
-        return ($container = $this->getContainer()) && $container->has("pwa.{$alias}");
+        return ($container = $this->getContainer()) && $container->has("contact-infos.{$alias}");
     }
 
     /**

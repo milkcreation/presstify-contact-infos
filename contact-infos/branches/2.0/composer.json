@@ -1,7 +1,7 @@
 {
   "name": "presstify-plugins/contact-infos",
   "description": "Extension PresstiFy de gestion d'informations de contact.",
-  "type": "presstify-plugin",
+  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/contact-infos/",
   "keywords": [
     "presstify",
     "plugins",
@@ -9,9 +9,9 @@
     "contact",
     "informations"
   ],
-  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/contact-infos/",
-  "time": "2020-11-13",
-  "license": "proprietary",
+  "type": "presstify-plugin",
+  "time": "2020-11-14",
+  "license": "MIT",
   "authors": [
     {
       "name": "Jordy Manner",
