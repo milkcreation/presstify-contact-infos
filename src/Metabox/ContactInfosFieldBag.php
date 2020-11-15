@@ -2,7 +2,7 @@
 
 namespace tiFy\Plugins\ContactInfos\Metabox;
 
-class ContactInfosField extends AbstractContactInfosBag
+class ContactInfosFieldBag extends AbstractContactInfosBag
 {
     /**
      * Récupération de la clé d'indice de qualification de la valeur en base.
@@ -11,9 +11,10 @@ class ContactInfosField extends AbstractContactInfosBag
      */
     public function getName(): string
     {
-        $key = $this->get('name', '') ? : $this->getAlias();
+        $name = $this->get('name', '') ? : $this->getAlias();
+        $group = $this->get('group', '');
 
-        return $this->metabox->name(). "[{$key}]";
+        return $this->metabox->name() . '[datas]' . ($group ? "[{$group}]" : '') . "[{$name}]";
     }
 
     /**
@@ -25,7 +26,10 @@ class ContactInfosField extends AbstractContactInfosBag
      */
     public function getValue($default = null)
     {
-        return $this->metabox->value($this->get('name', ''), $default);
+        $name = $this->get('name', '') ? : $this->getAlias();
+        $group = $this->get('group', '');
+
+        return $this->metabox->value('datas.' . ($group ? "{$group}." : '') . $name, $default);
     }
 
     /**

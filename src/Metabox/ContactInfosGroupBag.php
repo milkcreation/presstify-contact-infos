@@ -2,18 +2,18 @@
 
 namespace tiFy\Plugins\ContactInfos\Metabox;
 
-class ContactInfosGroup extends AbstractContactInfosBag
+class ContactInfosGroupBag extends AbstractContactInfosBag
 {
     /**
      * Instance des champs à afficher.
-     * @var ContactInfosField[]|array
+     * @var ContactInfosFieldBag[]|array
      */
     protected $fields = [];
 
     /**
      * Récupération de la liste des champs à afficher.
      *
-     * @return ContactInfosField[]|array
+     * @return ContactInfosFieldBag[]|array
      */
     public function getFields(): array
     {

@@ -17,7 +17,7 @@ if (!function_exists('contact_infos')) {
             $cinfos = ContactInfos::instance();
 
             return is_null($key)
-                ? $cinfos->config()->get('infos', []) : $cinfos->config()->get("infos.{$key}", $default);
+                ? $cinfos->config()->get('datas', []) : $cinfos->config()->get("datas.{$key}", $default);
         } catch(Exception $e) {
             return $default;
         }
