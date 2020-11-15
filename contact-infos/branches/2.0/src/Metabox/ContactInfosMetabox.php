@@ -3,32 +3,28 @@
 namespace tiFy\Plugins\ContactInfos\Metabox;
 
 use Illuminate\Support\Collection;
-use tiFy\Plugins\ContactInfos\Contracts\ContactInfos;
+use tiFy\Plugins\ContactInfos\ContactInfosAwareTrait;
 use tiFy\Contracts\Metabox\MetaboxDriver as MetaboxDriverContract;
 use tiFy\Metabox\MetaboxDriver;
 
 class ContactInfosMetabox extends MetaboxDriver
 {
+    use ContactInfosAwareTrait;
+
     /**
      * @inheritDoc
      */
     protected $alias = 'contact-infos';
 
     /**
-     * Instance du gestionnaire de l'extension ContactInfos.
-     * @var ContactInfos|null
-     */
-    protected $contactInfos;
-
-    /**
      * Liste des instances de champs déclarés.
-     * @var ContactInfosField[]|array
+     * @var ContactInfosFieldBag[]|array
      */
     protected $fields = [];
 
     /**
      * Liste des instances de groupe de champs déclarés.
-     * @var ContactInfosGroup[]|array
+     * @var ContactInfosGroupBag[]|array
      */
     protected $groups = [];
 
@@ -36,13 +32,13 @@ class ContactInfosMetabox extends MetaboxDriver
      * Déclaration d'un champ.
      *
      * @param string $alias
-     * @param array|ContactInfosField $args
+     * @param array|ContactInfosFieldBag $args
      *
      * @return $this
      */
     public function addField(string $alias, $args = []): self
     {
-        $field = $args instanceof ContactInfosField ? $args : (new ContactInfosField())->set($args);
+        $field = $args instanceof ContactInfosFieldBag ? $args : (new ContactInfosFieldBag())->set($args);
 
         $this->fields[$alias] = $field->setMetabox($this)->setAlias($alias);
 
@@ -53,13 +49,13 @@ class ContactInfosMetabox extends MetaboxDriver
      * Déclaration d'un groupe de champ.
      *
      * @param string $alias
-     * @param array|ContactInfosGroup $args
+     * @param array|ContactInfosGroupBag $args
      *
      * @return $this
      */
     public function addGroup(string $alias, $args = []): self
     {
-        $group = $args instanceof ContactInfosGroup ? $args : (new ContactInfosGroup())->set($args);
+        $group = $args instanceof ContactInfosGroupBag ? $args : (new ContactInfosGroupBag())->set($args);
 
         $this->groups[$alias] = $group->setMetabox($this)->setAlias($alias);
 
@@ -76,102 +72,82 @@ class ContactInfosMetabox extends MetaboxDriver
         $fields = [
             'address1' => [
                 'group'    => 'contact',
-                'name'     => 'contact_address1',
                 'title'    => __('Adresse Postale', 'tify')
             ],
             'address2' => [
                 'group'    => 'contact',
-                'name'     => 'contact_address2',
                 'title'    => __('Adresse complémentaire', 'tify')
             ],
             'address3' => [
                 'group'    => 'contact',
-                'name'     => 'contact_address3',
                 'title'    => __('Informations supplémentaires concernant l\'adresse', 'tify')
             ],
             'city'     => [
                 'group'    => 'contact',
-                'name'     => 'contact_city',
                 'title'    => __('Ville', 'tify')
             ],
             'postcode' => [
                 'group'    => 'contact',
-                'name'     => 'contact_postcode',
                 'title'    => __('Code postal', 'tify')
             ],
             'country'     => [
                 'group'    => 'contact',
-                'name'     => 'contact_country',
                 'title'    => __('Pays', 'tify')
             ],
             'phone'    => [
                 'group'    => 'contact',
-                'name'     => 'contact_phone',
                 'title'    => __('Numéro de téléphone', 'tify')
             ],
             'fax'      => [
                 'group'    => 'contact',
-                'name'     => 'contact_fax',
                 'title'    => __('Numéro de fax', 'tify')
             ],
             'email'    => [
                 'group'    => 'contact',
-                'name'     => 'contact_email',
                 'title'    => __('Adresse de messagerie', 'tify')
             ],
             'website'    => [
                 'group'    => 'contact',
-                'name'     => 'contact_website',
                 'title'    => __('Site internet', 'tify')
             ],
             'map'      => [
                 'group' => 'contact',
-                'name'  => 'contact_map',
                 'title' => __('Carte', 'theme'),
             ],
             'maplink'  => [
                 'group' => 'contact',
-                'name'  => 'contact_maplink',
                 'title' => __('Lien vers la carte interactive', 'theme'),
             ],
             'company'  => [
                 'group'    => 'company',
-                'name'     => 'company_name',
                 'title'    => __('Nom de la société', 'tify')
             ],
             'form'     => [
                 'group'    => 'company',
-                'name'     => 'company_form',
                 'title'    => __('Forme juridique', 'tify')
             ],
             'siren'    => [
                 'group'    => 'company',
-                'name'     => 'company_siren',
                 'title'    => __('Numéro de SIREN', 'tify')
             ],
             'siret'    => [
                 'group'    => 'company',
-                'name'     => 'company_siret',
                 'title'    => __('Numéro de SIRET', 'tify')
             ],
             'tva'      => [
                 'group'    => 'company',
-                'name'     => 'company_tva',
                 'title'    => __('N° de TVA Intracommunautaire', 'tify')
             ],
             'ape'      => [
                 'group'    => 'company',
-                'name'     => 'company_ape',
                 'title'    => __('Activité (Code NAF ou APE)', 'tify')
             ],
             'cnil'     => [
                 'group'    => 'company',
-                'name'     => 'company_cnil',
                 'title'    => __('Déclaration CNIL', 'tify')
             ],
             'opening'  => [
                 'group' => 'company',
-                'name'  => 'company_opening',
                 'title' => __('Horaires d\'ouverture', 'theme'),
             ]
         ];
@@ -221,7 +197,7 @@ class ContactInfosMetabox extends MetaboxDriver
      *
      * @param string $group Alias de qualification du groupe.
      *
-     * @return ContactInfosField[]|array
+     * @return ContactInfosFieldBag[]|array
      */
     public function getFields(string $group): array
     {
@@ -242,7 +218,7 @@ class ContactInfosMetabox extends MetaboxDriver
     /**
      * Récupération de la liste des groupes de champs.
      *
-     * @return ContactInfosGroup[]|array
+     * @return ContactInfosGroupBag[]|array
      */
     public function getGroups(): array
     {
@@ -259,14 +235,14 @@ class ContactInfosMetabox extends MetaboxDriver
     }
 
     /**
-     *
+     * @inheritDoc
      */
     public function parse(): MetaboxDriverContract
     {
         parent::parse();
 
         if (!$this->has('viewer.directory')) {
-            $this->set('viewer.directory', $this->contactInfos->resources('/views/admin/metabox/'));
+            $this->set('viewer.directory', $this->cinfos()->resources('/views/metabox/'));
         }
 
         return $this;
@@ -280,19 +256,5 @@ class ContactInfosMetabox extends MetaboxDriver
         $this->set('groups', $this->getGroups());
 
         return parent::render();
-    }
-
-    /**
-     * Définition du gestionnaire de l'extension ContactInfos.
-     *
-     * @param ContactInfos $contact_infos
-     *
-     * @return $this
-     */
-    public function setContactInfos(ContactInfos $contact_infos): MetaboxDriverContract
-    {
-        $this->contactInfos = $contact_infos;
-
-        return $this;
     }
 }

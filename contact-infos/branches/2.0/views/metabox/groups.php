@@ -1,8 +1,8 @@
 <?php
 /**
  * @var tiFy\Contracts\Metabox\MetaboxView $this
- * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosField $field
- * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosGroup $group
+ * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosFieldBag $field
+ * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosGroupBag $group
  */
 ?>
 <?php foreach ($this->get('groups', []) as $group) : ?>
@@ -11,9 +11,9 @@
 
         <table class="Form-table">
             <tbody>
-                <?php foreach ($fields as $field) : ?>
+            <?php foreach ($fields as $field) : ?>
                 <tr><?php echo $field->render(); ?></tr>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>

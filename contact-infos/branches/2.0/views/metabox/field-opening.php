@@ -1,7 +1,7 @@
 <?php
 /**
  * @var tiFy\Contracts\Metabox\MetaboxView $this
- * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosField $field
+ * @var tiFy\Plugins\ContactInfos\Metabox\ContactInfosFieldBag $field
  */
 ?>
 <?php $this->layout('layout-field'); ?>
@@ -10,10 +10,10 @@
 <?php echo $field->getTitle(); ?>
 <?php $this->end(); ?>
 
-<?php echo field('text', [
+<?php echo field('text-remaining', [
     'attrs' => [
         'class' => '%s widefat',
     ],
     'name'  => $field->getName(),
-    'value' => $field->getValue(),
+    'value' => nl2br($field->getValue()),
 ]);
