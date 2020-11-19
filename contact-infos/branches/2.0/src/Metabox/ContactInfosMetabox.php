@@ -65,7 +65,7 @@ class ContactInfosMetabox extends MetaboxDriver
     /**
      * @inheritDoc
      */
-    public function boot(): void
+    public function boot(): MetaboxDriverContract
     {
         parent::boot();
 
@@ -168,6 +168,8 @@ class ContactInfosMetabox extends MetaboxDriver
         foreach ($groups as $alias => $group) {
             $this->addGroup($alias, $group);
         }
+
+        return $this;
     }
 
     /**
@@ -237,24 +239,15 @@ class ContactInfosMetabox extends MetaboxDriver
     /**
      * @inheritDoc
      */
-    public function parse(): MetaboxDriverContract
-    {
-        parent::parse();
-
-        if (!$this->has('viewer.directory')) {
-            $this->set('viewer.directory', $this->cinfos()->resources('/views/metabox/'));
-        }
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function render(): string
     {
         $this->set('groups', $this->getGroups());
 
         return parent::render();
+    }
+
+    public function viewDirectory(): string
+    {
+        return $this->cinfos()->resources('/views/metabox/');
     }
 }

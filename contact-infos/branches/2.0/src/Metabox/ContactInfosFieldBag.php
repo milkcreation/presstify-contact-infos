@@ -51,10 +51,10 @@ class ContactInfosFieldBag extends AbstractContactInfosBag
     {
         $tmpl = "field-{$this->getAlias()}";
 
-        if (!$this->metabox->viewer()->exists($tmpl)) {
+        if (!$this->metabox->view()->exists($tmpl)) {
             $tmpl = 'tmpl-field';
         }
 
-        return $this->metabox->viewer($tmpl, ['field' => $this]);
+        return $this->metabox->view($tmpl, ['field' => $this]);
     }
 }
