@@ -10,7 +10,7 @@ use tiFy\Contracts\Support\ParamsBag;
 interface ContactInfos
 {
     /**
-     * Récupération de l'instance de l'extension gestion d'optimisation.
+     * Récupération de l'instance.
      *
      * @return static
      *
@@ -19,7 +19,7 @@ interface ContactInfos
     public static function instance(): ContactInfos;
 
     /**
-     * Initialisation du gestionnaire d'optimisation.
+     * Chargement.
      *
      * @return static
      */
@@ -52,7 +52,7 @@ interface ContactInfos
     public function getProvider(string $name);
 
     /**
-     * Résolution de service fourni par le gestionnaire d'abonnments.
+     * Résolution de service fourni par le gestionnaire.
      *
      * @param string $alias
      *
@@ -61,7 +61,7 @@ interface ContactInfos
     public function resolve(string $alias);
 
     /**
-     * Vérification de résolution possible d'un service fourni par le gestionnaire d'abonnments.
+     * Vérification de résolution possible d'un service fourni par le gestionnaire.
      *
      * @param string $alias
      *
