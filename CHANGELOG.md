@@ -1,5 +1,12 @@
 # Release Notes
 
+## [v2.0.4 (2020-11-22)](https://svn.tigreblanc.fr/presstify-plugins/contact-infos/tags/2.0.4...v2.0.4)
+
+### Changed
+
+- Passe corrective commentaires
+- Chargement wp.booted
+
 ## [v2.0.3 (2020-11-15)](https://svn.tigreblanc.fr/presstify-plugins/contact-infos/tags/2.0.3...v2.0.3)
 
 ### Changed

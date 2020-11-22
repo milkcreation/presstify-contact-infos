@@ -13,7 +13,7 @@ class ContactInfosServiceProvider extends ServiceProvider
      * @var string[]
      */
     protected $provides = [
-        'contact-infos'
+        'contact-infos',
     ];
 
     /**
@@ -21,18 +21,16 @@ class ContactInfosServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (($wp = $this->getContainer()->get('wp')) && $wp->is()) {
-            add_action('after_setup_theme', function (): ContactInfosContract {
-                /** @var ContactInfosContract $cinfos */
-                $cinfos = $this->getContainer()->get('contact-infos');
+        events()->listen('wp.booted', function () {
+            /** @var ContactInfosContract $cinfos */
+            $cinfos = $this->getContainer()->get('contact-infos');
 
-                if ($options = get_option('contact_infos') ?: null) {
-                    $cinfos->config($options);
-                }
+            if ($options = get_option('contact_infos') ?: null) {
+                $cinfos->config($options);
+            }
 
-                return $cinfos->boot();
-            });
-        }
+            return $cinfos->boot();
+        });
     }
 
     /**

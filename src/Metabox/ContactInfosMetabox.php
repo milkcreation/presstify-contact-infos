@@ -118,7 +118,7 @@ class ContactInfosMetabox extends MetaboxDriver
                 'group' => 'contact',
                 'title' => __('Lien vers la carte interactive', 'theme'),
             ],
-            'company'  => [
+            'name'  => [
                 'group'    => 'company',
                 'title'    => __('Nom de la société', 'tify')
             ],

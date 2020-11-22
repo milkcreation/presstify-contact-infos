@@ -20,7 +20,7 @@ class ContactInfos implements ContactInfosContract
     private static $instance;
 
     /**
-     * Indicateur d'initialisation.
+     * Indicateur de chargement.
      * @var bool
      */
     private $booted = false;
@@ -29,9 +29,7 @@ class ContactInfos implements ContactInfosContract
      * Liste des services par défaut fournis par conteneur d'injection de dépendances.
      * @var array
      */
-    private $defaultProviders = [
-
-    ];
+    private $defaultProviders = [];
 
     /**
      * Instance du gestionnaire des ressources
@@ -79,7 +77,7 @@ class ContactInfos implements ContactInfosContract
             return self::$instance;
         }
 
-        throw new Exception('Unavailable ContactInfos instance');
+        throw new Exception(sprintf('Unavailable %s instance', __CLASS__));
     }
 
     /**
