@@ -13,7 +13,7 @@ class ContactInfosServiceProvider extends ServiceProvider
      * @var string[]
      */
     protected $provides = [
-        'contact-infos',
+        ContactInfosContract::class,
     ];
 
     /**
@@ -23,7 +23,7 @@ class ContactInfosServiceProvider extends ServiceProvider
     {
         events()->listen('wp.booted', function () {
             /** @var ContactInfosContract $cinfos */
-            $cinfos = $this->getContainer()->get('contact-infos');
+            $cinfos = $this->getContainer()->get(ContactInfosContract::class);
 
             if ($options = get_option('contact_infos') ?: null) {
                 $cinfos->config($options);
@@ -38,7 +38,7 @@ class ContactInfosServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->getContainer()->share('contact-infos', function () {
+        $this->getContainer()->share(ContactInfosContract::class, function () {
             return new ContactInfos(config('contact-infos', []), $this->getContainer());
         });
     }

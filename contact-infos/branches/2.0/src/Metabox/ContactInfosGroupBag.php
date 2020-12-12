@@ -27,7 +27,7 @@ class ContactInfosGroupBag extends AbstractContactInfosBag
      */
     public function getTitle(): string
     {
-        return $this->get('title', '') ? : $this->getAlias();
+        return (string)$this->get('title') ? : $this->getAlias();
     }
 
     /**
