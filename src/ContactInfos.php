@@ -2,28 +2,26 @@
 
 namespace tiFy\Plugins\ContactInfos;
 
-use Exception;
+use RuntimeException;
 use Psr\Container\ContainerInterface as Container;
 use tiFy\Contracts\Filesystem\LocalFilesystem;
 use tiFy\Plugins\ContactInfos\Contracts\ContactInfos as ContactInfosContract;
 use tiFy\Plugins\ContactInfos\Metabox\ContactInfosMetabox;
+use tiFy\Support\Concerns\BootableTrait;
+use tiFy\Support\Concerns\ContainerAwareTrait;
 use tiFy\Support\ParamsBag;
 use tiFy\Support\Proxy\Metabox;
 use tiFy\Support\Proxy\Storage;
 
 class ContactInfos implements ContactInfosContract
 {
+    use BootableTrait, ContainerAwareTrait;
+
     /**
      * Instance de la classe.
      * @var static|null
      */
     private static $instance;
-
-    /**
-     * Indicateur de chargement.
-     * @var bool
-     */
-    private $booted = false;
 
     /**
      * Liste des services par défaut fournis par conteneur d'injection de dépendances.
@@ -42,12 +40,6 @@ class ContactInfos implements ContactInfosContract
      * @var ParamsBag
      */
     protected $config;
-
-    /**
-     * Instance du gestionnaire d'injection de dépendances.
-     * @var Container
-     */
-    protected $container;
 
     /**
      * @param array $config
@@ -77,7 +69,7 @@ class ContactInfos implements ContactInfosContract
             return self::$instance;
         }
 
-        throw new Exception(sprintf('Unavailable %s instance', __CLASS__));
+        throw new RuntimeException(sprintf('Unavailable %s instance', __CLASS__));
     }
 
     /**
@@ -85,7 +77,7 @@ class ContactInfos implements ContactInfosContract
      */
     public function boot(): ContactInfosContract
     {
-        if (!$this->booted) {
+        if (!$this->isBooted()) {
             Metabox::registerDriver('contact-infos', (new ContactInfosMetabox())->setContactInfos($this));
 
             add_action('init', function () {
@@ -119,7 +111,7 @@ class ContactInfos implements ContactInfosContract
                 }
             });
 
-            $this->booted = true;
+            $this->setBooted();
         }
 
         return $this;
@@ -146,14 +138,6 @@ class ContactInfos implements ContactInfosContract
     /**
      * @inheritDoc
      */
-    public function getContainer(): ?Container
-    {
-        return $this->container;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getProvider(string $name)
     {
         return $this->config("providers.{$name}", $this->defaultProviders[$name] ?? null);
@@ -162,26 +146,10 @@ class ContactInfos implements ContactInfosContract
     /**
      * @inheritDoc
      */
-    public function resolve(string $alias)
-    {
-        return ($container = $this->getContainer()) ? $container->get("contact-infos.{$alias}") : null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function resolvable(string $alias): bool
-    {
-        return ($container = $this->getContainer()) && $container->has("contact-infos.{$alias}");
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function resources(?string $path = null)
     {
         if (!isset($this->resources) ||is_null($this->resources)) {
-            $this->resources = Storage::local(dirname(__DIR__));
+            $this->resources = Storage::local(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'resources');
         }
 
         return is_null($path) ? $this->resources : $this->resources->path($path);
@@ -193,16 +161,6 @@ class ContactInfos implements ContactInfosContract
     public function setConfig(array $attrs): ContactInfosContract
     {
         $this->config($attrs);
-
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setContainer(Container $container): ContactInfosContract
-    {
-        $this->container = $container;
 
         return $this;
     }
