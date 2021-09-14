@@ -1,7 +1,7 @@
 {
   "name": "presstify-plugins/contact-infos",
   "description": "Extension PresstiFy de gestion d'informations de contact.",
-  "homepage": "https://svn.tigreblanc.fr/presstify-plugins/contact-infos/",
+  "homepage": "https://github.com/milkcreation/presstify-contact-infos.git",
   "keywords": [
     "presstify",
     "plugins",
